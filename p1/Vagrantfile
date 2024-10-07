@@ -1,0 +1,66 @@
+VIRTUAL_BOX			= "boxomatic/alpine-3.20"
+VERSION_BOX			= "20240704.0.1"
+CPUS				= 1
+MEMORY				= 1024
+
+SCRIPT_SSH_KEY		= <<-SHELL
+	if [ ! -f /home/vagrant/.ssh/id_rsa ]; then
+		ssh-keygen -t rsa -b 4096 -f /home/vagrant/.ssh/id_rsa -q -N ""
+	fi
+	cat /home/vagrant/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
+	rm -rf /home/vagrant/id_rsa.pub
+SHELL
+
+SCRIPT_ALIAS		= <<-SHELL
+	echo "ajout de 'k' pour l'alias de kubectl"
+	echo "alias k='kubectl'" >> /home/vagrant/.bashrc
+SHELL
+
+NAME_CONTROLLER		= "jpilletS"
+IP_CONTROLLER		= "192.168.56.110"
+SCRIPT_CONTROLLER	= <<-SHELL
+	curl -sfL https://get.k3s.io/ |  K3S_KUBECONFIG_MODE="644" K3S_TOKEN="JeSuiSUneBanane" K3S_EXTERNAL_IP="192.168.56.110" sh -s - server --flannel-iface=eth1
+SHELL
+
+NAME_AGENT			= "jpilletSW"
+IP_AGENT			= "192.168.56.111"
+SCRIPT_AGENT		= <<-SHELL
+	curl -sfL https://get.k3s.io | K3S_KUBECONFIG_MODE="644" K3S_TOKEN="JeSuiSUneBanane" K3S_URL="https://192.168.56.110:6443" sh -s - agent --flannel-iface=eth1
+SHELL
+
+Vagrant.configure("2") do |config|
+	config.vm.box				= VIRTUAL_BOX
+  	config.vm.box_version		= VERSION_BOX
+
+	config.vm.provider :virtualbox do |vb|
+		vb.cpus					= CPUS
+		vb.memory				= MEMORY
+	end
+
+	# Configuration commune clef SSH
+	config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "/home/vagrant/id_rsa.pub"
+	config.vm.provision "shell", inline: SCRIPT_SSH_KEY
+	config.vm.provision "shell", inline: SCRIPT_ALIAS
+
+	config.vm.define "jpilletS" do |jpilletS|
+		jpilletS.vm.hostname	= NAME_CONTROLLER
+		jpilletS.vm.network "private_network", ip: IP_CONTROLLER
+
+		jpilletS.vm.provision "shell", inline: SCRIPT_CONTROLLER
+
+		jpilletS.vm.provider "virtualbox" do |vc|
+			vc.name				= NAME_CONTROLLER
+		end
+	end
+
+	config.vm.define "jpilletSW" do |jpilletSW|
+		jpilletSW.vm.hostname	= NAME_AGENT
+		jpilletSW.vm.network "private_network", ip: IP_AGENT
+
+		jpilletSW.vm.provision "shell", inline: SCRIPT_AGENT
+
+		jpilletSW.vm.provider "virtualbox" do |va|
+			va.name				= NAME_AGENT
+		end
+	end
+end

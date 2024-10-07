@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: jpillet-iot-app
+spec:
+  destination:
+    name: ''
+    namespace: dev
+    server: https://kubernetes.default.svc
+  source:
+    path: p3/iot-wil-app/manifests
+    repoURL: https://github.com/JuPillet/jpillet-iot-app
+    targetRevision: HEAD
+    directory:
+      recurse: true
+  sources: []
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ApplyOutOfSyncOnly=true

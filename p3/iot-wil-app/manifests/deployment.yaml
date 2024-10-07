@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wil-playground
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wil-playground
+  template:
+    metadata:
+      labels:
+        app: wil-playground  
+    spec:
+      containers:
+      - name: wil-playground
+        image: wil42/playground:v1
+        ports:
+        - containerPort: 8888 # <--- ceci N°1 doit correspondre à
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: wil-playground
+spec:
+  selector:
+    app: wil-playground
+  ports:
+  - protocol: TCP
+    port: 8888 # <--- ceci N°2 doit correspondra à
+    targetPort: 8888 # <--- cela N°1
+
+---
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: wil-playground
+spec:
+  rules:
+  - host: wil-pg.localhost
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: wil-playground
+            port:
+              number: 8888 # <--- cela N° 2

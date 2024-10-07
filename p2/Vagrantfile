@@ -1,0 +1,66 @@
+NAME_PROJECT		= "jpilletS"
+VIRTUAL_BOX			= "boxomatic/alpine-3.20"
+VERSION_BOX			= "20240704.0.1"
+
+CPUS				= 1
+MEMORY				= 2048
+IP_PROJECT			= "192.168.56.110"
+
+SCRIPT_VM_INIT		= <<-SHELL
+	echo "ajout du host en ip local"
+	echo "127.0.1.1 $(hostname)" >> /etc/hosts
+	echo "host en ip local ajouté"
+
+	if [ ! -f /home/vagrant/.ssh/id_rsa ]; then
+		echo "Création de la clef SSH de l'OS virtualisé"
+		ssh-keygen -t rsa -b 4096 -f /home/vagrant/.ssh/id_rsa -q -N ""
+		echo "Clef SSH créé\n"
+	fi
+
+	echo "Ajout de la clef SSH de HOST dans les clef SSH autorisé par l'OS virtualisé"
+	cat /tmp/id_rsa.pub >> /home/vagrant/.ssh/authorized_keys
+	echo "Clef SSH de HOST ajoutée dans les clef SSH autorisé par l'OS virtualisé\n"
+
+	echo "installation de curl"
+	apk add curl
+	echo "curl installé"
+
+	echo "Installation K3S"
+	curl -sfL https://get.k3s.io/ | K3S_KUBECONFIG_MODE="644" K3S_EXTERNAL_IP="#{IP_PROJECT}" sh -s - server --flannel-iface=eth1
+	sleep 30
+	echo "ajout 'k' pour alias de kubectl"
+	echo "alias k='k3s kubectl'" >> /home/vagrant/.bashrc
+	echo "Fin d'installation K3S"
+
+	echo "Déploiement des APPs"
+	kubectl create configmap app-one-html --from-file=/home/vagrant/apps/app1/index.html
+	kubectl create configmap app-two-html --from-file=/home/vagrant/apps/app2/index.html
+	kubectl create configmap app-three-html --from-file=/home/vagrant/apps/app3/index.html
+	kubectl apply -f /home/vagrant/conf/deployment.yaml
+	sleep 270
+	kubectl get pods
+	echo "Fin Déploiement des APPs"
+SHELL
+
+
+Vagrant.configure("2") do |config|
+	config.vm.box				= VIRTUAL_BOX
+  	config.vm.box_version		= VERSION_BOX
+
+	config.vm.provider :virtualbox do |vb|
+		vb.cpus					= CPUS
+		vb.memory				= MEMORY
+		vb.name					= NAME_PROJECT
+	end
+
+	config.vm.define "jpilletS" do |jpilletS|
+		jpilletS.vm.hostname	= NAME_PROJECT
+		jpilletS.vm.network "private_network", ip: IP_PROJECT
+		config.vm.network "forwarded_port", guest: 80, host: 80, protocol: "tcp"
+		config.vm.network "forwarded_port", guest: 6443, host: 6443, protocol: "tcp"
+		jpilletS.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "/tmp/id_rsa.pub"
+		jpilletS.vm.synced_folder "./apps", "/home/vagrant/apps", type: "virtualbox"
+		jpilletS.vm.synced_folder "./conf", "/home/vagrant/conf"
+		jpilletS.vm.provision "shell", privileged: true, inline: SCRIPT_VM_INIT
+	end
+end
