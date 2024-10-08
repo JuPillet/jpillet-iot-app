@@ -38,6 +38,7 @@ response=$(sudo curl -s --request POST --url "$gitlab_api/users/$id_user/persona
 
 echo "response : $response"
 
+
 echo $response > pa_token.txt
 
 pa_token=$(cat "pa_token.txt")
