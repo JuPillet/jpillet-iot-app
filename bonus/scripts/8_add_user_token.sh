@@ -5,6 +5,12 @@ gitlab_api="http://api.$gitlab_host/api/v4"
 gitlab_user="$1"
 gitlab_pass="$2"
 
+if [ -f "pa_token.txt" ]; then
+    make delusertoken
+else
+    echo "Le fichier pa_token.txt n'existe pas."
+fi
+
 echo 'grant_type=password&username='$gitlab_user'&password='$gitlab_pass > auth.txt
 
 oauth_token=$(curl -s --request POST "$gitlab_host/oauth/token" --data "@auth.txt")
