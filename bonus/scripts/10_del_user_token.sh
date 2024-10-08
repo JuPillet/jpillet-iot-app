@@ -2,13 +2,13 @@
 gitlab_host="gitlab.localhost:8888"
 gitlab_api="http://api.$gitlab_host/api/v4"
 
-api_token=$(cat "api_token.txt")
-echo "api_token : $api_token"
+pa_token=$(cat "pa_token.txt")
+echo "pa_token : $pa_token"
 
-token_id=$(echo $api_token | cut -d ":" -f2 | cut -d "," -f1)
+token_id=$(echo $pa_token | cut -d ":" -f2 | cut -d "," -f1)
 echo "token_id : $token_id"
 
-token=$(echo $api_token | cut -d "\"" -f30)
+token=$(echo $pa_token | cut -d "\"" -f30)
 echo "token : $token"
 
 response=$(sudo curl -s --request DELETE "$gitlab_api/personal_access_tokens/$token_id" \

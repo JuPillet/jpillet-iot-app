@@ -1,8 +1,9 @@
 # Define targets
+
 all: install
 
 test:
-	bash ./scripts/0_test.sh ${username} ${password} ${email}
+	bash ./scripts/0_test.sh "$(scopes)"
 
 install:
 	bash ./scripts/1_install.sh
@@ -28,14 +29,14 @@ getrootpass:
 createuser:
 	bash ./scripts/7_create_user.sh ${username} ${password} ${name} ${email}
 
-adduserapitoken:
-	bash ./scripts/8_add_user_api_token.sh ${username} ${password}
+addusertoken:
+	bash ./scripts/8_add_user_token.sh ${username} ${password} ${scopes}
 
-rotuserapitoken:
-	bash ./scripts/9_rotate_user_api_token.sh
+rotusertoken:
+	bash ./scripts/9_rotate_user_token.sh
 
-deluserapitoken:
-	bash ./scripts/10_del_user_api_token.sh
+delusertoken:
+	bash ./scripts/10_del_user_token.sh
 
 addssh:
 	bash ./scripts/11_add_ssh.sh

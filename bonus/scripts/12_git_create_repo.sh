@@ -5,13 +5,13 @@ gitlab_api="http://api.$gitlab_host/api/v4"
 repo_name="$1"
 repo_clone="../../$repo_name"
 
-api_token=$(cat "api_token.txt")
-echo "api_token : $api_token"
+pa_token=$(cat "pa_token.txt")
+echo "pa_token : $pa_token"
 
-user_id=$(echo $api_token | cut -d ":" -f9 | cut -d "," -f1)
+user_id=$(echo $pa_token | cut -d ":" -f9 | cut -d "," -f1)
 echo "user : $user_id"
 
-token=$(echo $api_token | cut -d "\"" -f30)
+token=$(echo $pa_token | cut -d "\"" -f30)
 echo "token : $token"
 
 response=$(sudo curl -s --request POST "$gitlab_api/projects" \

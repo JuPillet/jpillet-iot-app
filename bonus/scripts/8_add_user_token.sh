@@ -31,19 +31,19 @@ expires_at=$(sudo date -d "+2 days" +"%Y-%m-%d %H:%M:%S")
 
 response=$(sudo curl -s --request POST --url "$gitlab_api/users/$id_user/personal_access_tokens" \
     --header "Authorization: Bearer $access_token" \
-	--data "name=api_token" \
-    --data "scopes[]=api" \
+	--data "name=pa_token" \
+    --data "scopes[]=[\"$(echo "$3" | sed 's/, /,/g' | sed 's/,/","/g')\"]" \
 	--data "expires_at=$expires_at" \
 )
 
 echo "response : $response"
 
-echo $response > api_token.txt
+echo $response > pa_token.txt
 
-api_token=$(cat "api_token.txt")
-echo "api_token : $api_token"
+pa_token=$(cat "pa_token.txt")
+echo "pa_token : $pa_token"
 
-token=$(echo $api_token | cut -d "\"" -f30)
+token=$(echo $pa_token | cut -d "\"" -f30)
 echo "token : $token"
 
 response=$(sudo curl -s --request GET "$gitlab_api/personal_access_tokens" \
