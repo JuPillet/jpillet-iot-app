@@ -10,9 +10,9 @@ sudo git clone http://$1:$2@$gitlab_api/$1/$5.git $repo_clone
 
 echo $response
 
-sudo git ${repo_clone} config user.email "$4"
+sudo git -C ${repo_clone} config user.email "$4"
 
-sudo git ${repo_clone} config user.name "$3"
+sudo git -C ${repo_clone} config user.name "$3"
 
 sudo git -C ${repo_clone} commit -m "add info on the repo"
 
