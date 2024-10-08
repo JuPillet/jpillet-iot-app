@@ -61,4 +61,4 @@ appbonus:
 delbonus:
 	bash ./scripts/18_delete_bonus.sh
 
-.PHONY: all install add ingress del getgitlabpods getpass getrootpass changepass createuser addusertoken rotusertoken delusertoken addssh createrepo clonerepo addbonus push_bonus
+.PHONY: all install add ingress del getgitlabpods getpass getrootpass changepass createuser addusertoken rotusertoken delusertoken addssh createrepo clonerepo addbonus pushbonus delapp appbonus delbonus

@@ -7,8 +7,6 @@ gitlab_pass="$2"
 
 if [ -f "pa_token.txt" ]; then
     make delusertoken
-else
-    echo "Le fichier pa_token.txt n'existe pas."
 fi
 
 echo 'grant_type=password&username='$gitlab_user'&password='$gitlab_pass > auth.txt
@@ -38,7 +36,7 @@ expires_at=$(sudo date -d "+2 days" +"%Y-%m-%d %H:%M:%S")
 response=$(sudo curl -s --request POST --url "$gitlab_api/users/$id_user/personal_access_tokens" \
     --header "Authorization: Bearer $access_token" \
 	--data "name=pa_token" \
-    --data "scopes[]=[\"$(echo "$3" | sed 's/, /,/g' | sed 's/,/","/g')\"]" \
+    --data "scopes[]=$(echo "$3" | sed 's/, /,/g')" \
 	--data "expires_at=$expires_at" \
 )
 
@@ -49,7 +47,7 @@ echo $response > pa_token.txt
 pa_token=$(cat "pa_token.txt")
 echo "pa_token : $pa_token"
 
-token=$(echo $pa_token | cut -d "\"" -f30)
+token=$(echo $pa_token | rev | cut -d "\"" -f2 | rev)
 echo "token : $token"
 
 response=$(sudo curl -s --request GET "$gitlab_api/personal_access_tokens" \
