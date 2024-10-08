@@ -1,5 +1,4 @@
 # Define targets
-
 all: install
 
 test:
