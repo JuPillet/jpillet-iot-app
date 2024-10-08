@@ -8,12 +8,10 @@ echo "pa_token : $pa_token"
 token_id=$(echo $pa_token | cut -d ":" -f2 | cut -d "," -f1)
 echo "token_id : $token_id"
 
-token=$(echo $pa_token | rev | cut -d "\"" -f2 | rev)
+token=$(echo $pa_token | cut -d "\"" -f30)
 echo "token : $token"
 
 response=$(sudo curl -s --request DELETE "$gitlab_api/personal_access_tokens/$token_id" \
    --header "Authorization: Bearer $token" \
 )
 echo "response : $response"
-
-sudo rm -rf pa_token.txt
