@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: jpillet-iot-app
+  name: jpillet-iot-app-bonus
 spec:
   destination:
     name: ''

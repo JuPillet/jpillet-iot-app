@@ -1,6 +1,8 @@
 #!/bin/bash
 gitlab_host="gitlab.localhost:8888"
-gitlab_api="http://api.$gitlab_host/api/v4"
+gitlab_http="http://api.$gitlab_host"
+gitlab_api="$gitlab_http/api/v4"
+
 gitlab_admin="root"
 gitlab_password=$(bash ./scripts/6_get_rootpass.sh FORTOKEN=1)
 

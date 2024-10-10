@@ -1,26 +1,34 @@
 #!/bin/bash
 gitlab_host="gitlab.localhost:8888"
-gitlab_api="http://api.$gitlab_host/api/v4"
+gitlab_http="http://api.$gitlab_host"
+gitlab_api="$gitlab_http/api/v4"
 
-repo_name="$1"
-repo_clone="../../$repo_name"
+repo_clone="../../$1"
 
 pa_token=$(cat "pa_token.txt")
 echo "pa_token : $pa_token"
 
-user_id=$(echo $pa_token | cut -d ":" -f9 | cut -d "," -f1)
-echo "user : $user_id"
-
-token=$(echo $pa_token | cut -d "\"" -f30)
+token=$(echo $pa_token | rev | cut -d "\"" -f2 | rev)
 echo "token : $token"
+
+user=$(curl -s "$gitlab_api/user" \
+	--header "Authorization: Bearer $token" \
+)
+echo $user
+
+user_id=$(echo $user | cut -d ":" -f2 | cut -d "," -f1)
+echo "user_id : $user_id"
+
+user_name=$(echo $user | cut -d "\"" -f6 | cut -d "," -f1)
+echo "user_id : $user_name"
 
 response=$(sudo curl -s --request POST "$gitlab_api/projects" \
     --header "Authorization: Bearer $token" \
 	--header "Content-Type: application/json" \
     --data '{
-        "name": "'$repo_name'",
-        "description": "'$repo_name'",
-        "path": "'$repo_name'",
+        "name": "'$1'",
+        "description": "'$1'",
+        "path": "'$1'",
         "namespace_id": "'$user_id'",
         "initialize_with_readme": true,
         "visibility": "public"
