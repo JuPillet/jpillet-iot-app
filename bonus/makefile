@@ -41,7 +41,7 @@ createuser:
 	read -p "" email; \
 	bash ./scripts/7_create_user.sh "$$username" "$$password" "$$name" "$$email"
 
-addusertoken:
+addusertoken: delusertoken
 	@echo "entrez le nom d'utilisateur du compte:"; \
 	read -p "" username; \
 	echo "entrez le mot de passe du compte:"; \

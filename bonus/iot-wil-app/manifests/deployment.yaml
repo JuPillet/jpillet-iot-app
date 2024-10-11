@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wil-playground
+  name: wil-playground-bonus
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wil-playground
+      app: wil-playground-bonus
   template:
     metadata:
       labels:
-        app: wil-playground  
+        app: wil-playground-bonus
     spec:
       containers:
       - name: wil-playground
@@ -23,10 +23,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: wil-playground
+  name: wil-playground-bonus
 spec:
   selector:
-    app: wil-playground
+    app: wil-playground-bonus
   ports:
   - protocol: TCP
     port: 8888 # <--- ceci N°2 doit correspondra à
@@ -37,10 +37,10 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: wil-playground
+  name: wil-playground-bonus
 spec:
   rules:
-  - host: wil-pg.localhost
+  - host: wil-pg-bonus.localhost
     http:
       paths:
       - path: /

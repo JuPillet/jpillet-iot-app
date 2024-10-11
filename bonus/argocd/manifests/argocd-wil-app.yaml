@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   source:
     path: bonus/iot-wil-app/manifests
-    repoURL: http://api.gitlab.localhost:8888/JuPillet/jpillet-iot-app-bonus
+    repoURL: http://10.43.165.98:8181/JuPillet/jpillet-iot-app-bonus.git
     targetRevision: HEAD
     directory:
       recurse: true
