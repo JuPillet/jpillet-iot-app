@@ -1,5 +1,4 @@
 #!/bin/bash
-#CERTMAIL="exemple@exemple.exemple"
 sudo kubectl create namespace gitlab
 
 sudo helm repo add gitlab https://charts.gitlab.io/

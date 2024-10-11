@@ -3,6 +3,8 @@ gitlab_host="gitlab.localhost:8888"
 gitlab_http="http://api.$gitlab_host"
 gitlab_api="$gitlab_http/api/v4"
 
+
+
 echo "apiVersion: argoproj.io/v1alpha1" > ./argocd/manifests/argocd-wil-app.yaml
 echo "kind: Application" >> ./argocd/manifests/argocd-wil-app.yaml
 echo "metadata:" >> ./argocd/manifests/argocd-wil-app.yaml

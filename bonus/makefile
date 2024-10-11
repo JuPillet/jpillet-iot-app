@@ -1,6 +1,5 @@
 SHELL:= /bin/bash
 
-
 all: install
 
 test:
@@ -35,7 +34,7 @@ createuser:
 	@echo "entrez le nom d'utilisateur du compte:"; \
 	read -p "" username; \
 	echo "entrez le mot de passe du compte:"; \
-	read -p "" password; \
+	read -sp "" password; \
 	echo "entrez le nom propre de l'utilisateur du compte:"; \
 	read -p "" name; \
 	echo "entrez l'email du compte:"; \
@@ -46,7 +45,7 @@ addusertoken:
 	@echo "entrez le nom d'utilisateur du compte:"; \
 	read -p "" username; \
 	echo "entrez le mot de passe du compte:"; \
-	read -p "" password; \
+	read -sp "" password; \
 	echo "entrez les scopes du token:"; \
 	read -p "" scopes; \
 	bash ./scripts/8_add_user_token.sh "$$username" "$$password" "$$scopes"
@@ -71,7 +70,7 @@ clonerepo:
 	@echo "entrez le nom d'utilisateur du compte:"; \
 	read -p "" username; \
 	echo "entrez le mot de passe du compte:"; \
-	read -p "" password; \
+	read -sp "" password; \
 	echo "entrez le nom du dépos à cloner:"; \
 	read -p "" email; \
 	bash ./scripts/13_git_clone.sh "$$username" "$$password" "$$reponame"
