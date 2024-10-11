@@ -3,7 +3,7 @@ gitlab_host="gitlab.localhost:8888"
 gitlab_http="http://api.$gitlab_host"
 gitlab_api="$gitlab_http/api/v4"
 
-pa_token=$(cat "pa_token.txt")
+pa_token=$(cat "../../pa_token.txt")
 echo "pa_token : $pa_token"
 
 token_id=$(echo $pa_token | cut -d ":" -f2 | cut -d "," -f1)

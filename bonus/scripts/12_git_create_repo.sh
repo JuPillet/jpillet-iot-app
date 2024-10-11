@@ -5,7 +5,7 @@ gitlab_api="$gitlab_http/api/v4"
 
 repo_clone="../../$1"
 
-pa_token=$(cat "pa_token.txt")
+pa_token=$(cat "../../pa_token.txt")
 echo "pa_token : $pa_token"
 
 token=$(echo $pa_token | rev | cut -d "\"" -f2 | rev)

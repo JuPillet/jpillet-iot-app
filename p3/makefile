@@ -10,7 +10,7 @@ cluster:
 delclu:
 	bash ./scripts/3_delete_cluster.sh
 
-app:
+addapp:
 	bash ./scripts/4_apply_app.sh
 
 delapp:
@@ -22,4 +22,4 @@ getpass:
 curl:
 	bash ./scripts/7_request_http.sh
 
-.PHONY: all install cluster delclu app delapp getpass curl
+.PHONY: all install cluster delclu addapp delapp getpass curl

@@ -30,7 +30,7 @@ gitlab_pass=$(bash ./scripts/6_get_rootpass.sh FORTOKEN=1)
 
 echo 'grant_type=password&username='$gitlab_user'&password='$gitlab_pass > auth.txt
 
-oauth_token=$(curl -s --request POST "$gitlab_host/oauth/token" --data "@auth.txt")
+oauth_token=$(curl -s --request POST "$gitlab_host/oauth/token" --data "@../../auth.txt")
 echo "oauth-token : $oauth_token"
 
 access_token=$(echo $oauth_token | cut -d "\"" -f4)
@@ -39,15 +39,15 @@ echo "access token : $access_token"
 expires_at=$(sudo date -d "+2 days" +"%Y-%m-%d %H:%M:%S")
 
 response=$(sudo curl -s --request POST --url "$gitlab_api/users/$user_id/personal_access_tokens" \
-    --header "Authorization: Bearer $access_token" \
+	--header "Authorization: Bearer $access_token" \
 	--data "name=pa_token" \
-    --data "scopes[]=$(echo "$3" | sed 's/ /,/g' | sed 's/, /,/g' | sed 's/,,/,/g')" \
+	--data "scopes[]=$(echo "$3" | sed 's/ /,/g' | sed 's/, /,/g' | sed 's/,,/,/g')" \
 	--data "expires_at=$expires_at" \
 )
 
 echo "response : $response"
 
-echo $response > pa_token.txt
+echo $response > ../../pa_token.txt
 
 pa_token=$(cat "pa_token.txt")
 echo "pa_token : $pa_token"
