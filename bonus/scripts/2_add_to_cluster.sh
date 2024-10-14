@@ -17,5 +17,4 @@ sudo helm upgrade --install gitlab gitlab/gitlab \
   --set gitlab.webservice.ingress.hosts[0].name=gitlab.localhost \
   --set gitlab.webservice.ingress.hosts[0].path=/ \
   --set gitlab.webservice.ingress.port=8181 \
-  --timeout 600s \
-#  --set certmanager-issuer.email=$CERTMAIL \
+  --timeout 600s

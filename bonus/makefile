@@ -12,13 +12,13 @@ test:
 install:
 	bash ./scripts/1_install.sh
 
-add:
+addgitlab:
 	bash ./scripts/2_add_to_cluster.sh
 
 ingress:
 	bash ./scripts/3_gitlab_ingress.sh
 
-del:
+delgitlab:
 	bash ./scripts/4_del_from_cluster.sh
 
 getgitlabpods:
@@ -114,4 +114,4 @@ appbonus:
 delbonus:
 	bash ./scripts/18_delete_bonus.sh
 
-.PHONY: all install add ingress del getgitlabpods getpass getrootpass changepass createuser addusertoken rotusertoken delusertoken addssh createrepo clonerepo addbonus pushbonus delapp appbonus delbonus
+.PHONY: all install addgitlab ingress delgitlab getgitlabpods getpass getrootpass changepass createuser addusertoken rotusertoken delusertoken addssh createrepo clonerepo addbonus pushbonus delbonus appbonus delbonus

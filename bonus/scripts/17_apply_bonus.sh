@@ -1,5 +1,4 @@
 #!/bin/bash
-
 internal_cluster_gitlab_ip=$(sudo kubectl get svc -n gitlab \
 	| grep "gitlab-webservice-default" \
 	| cut -d " " -f 7 \
