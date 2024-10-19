@@ -24,7 +24,7 @@ echo "user_id : $user_id"
 gitlab_user="root"
 gitlab_pass=$(bash ./scripts/6_get_rootpass.sh FORTOKEN=1)
 
-echo 'grant_type=password&username='$gitlab_user'&password='$gitlab_pass > auth.txt
+echo 'grant_type=password&username='$gitlab_user'&password='$gitlab_pass > ../../auth.txt
 
 oauth_token=$(curl -s --request POST "$gitlab_host/oauth/token" --data "@../../auth.txt")
 echo "oauth-token : $oauth_token"
@@ -45,7 +45,7 @@ echo "response : $response"
 
 echo $response > ../../pa_token.txt
 
-pa_token=$(cat "pa_token.txt")
+pa_token=$(cat "../../pa_token.txt")
 echo "pa_token : $pa_token"
 
 token=$(echo $pa_token | rev | cut -d "\"" -f2 | rev)
