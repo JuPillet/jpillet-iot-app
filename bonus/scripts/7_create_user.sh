@@ -9,7 +9,7 @@ gitlab_password=$(bash ./scripts/6_get_rootpass.sh FORTOKEN=1)
 new_user=$0
 new_pass=$1
 
-echo 'grant_type=password&username='$gitlab_admin'&password='$gitlab_pass > ../../auth.txt
+echo 'grant_type=password&username='$gitlab_admin'&password='$gitlab_password > ../../auth.txt
 
 oauth_token=$(curl -s --request POST "$gitlab_host/oauth/token" --data "@../../auth.txt")
 echo "oauth-token : $oauth_token"
