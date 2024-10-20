@@ -72,7 +72,7 @@ clonerepo:
 	echo "entrez le mot de passe du compte:"; \
 	read -sp "" password; \
 	echo "entrez le nom du dépos à cloner:"; \
-	read -p "" email; \
+	read -p "" reponame; \
 	bash ./scripts/13_git_clone.sh "$$username" "$$password" "$$reponame"
 
 addbonus:
