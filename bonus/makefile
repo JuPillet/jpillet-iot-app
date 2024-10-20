@@ -7,7 +7,7 @@ all: install
 	read -p "" variable1; \
 	echo "Enter a value for the variable2:"; \
 	
-	@ecread -p "" variable2; \
+	@read -p "" variable2; \
 	bash ./scripts/0_test.sh "$$variable1" "$$variable2";
 
 1_install:
