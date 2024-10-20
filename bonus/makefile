@@ -41,7 +41,7 @@ all: install
 	read -p "" email; \
 	bash ./scripts/7_create_user.sh "$$username" "$$password" "$$name" "$$email"
 
-9_addusertoken: delusertoken
+9_addusertoken: 11_delusertoken
 	@echo "entrez le nom d'utilisateur du compte:"; \
 	read -p "" username; \
 	echo "entrez le mot de passe du compte:"; \
