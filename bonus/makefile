@@ -14,8 +14,7 @@ all: install
 	bash ./scripts/1_install.sh
 
 2_addgitlab:
-	
-	@ecbash ./scripts/2_add_to_cluster.sh
+	bash ./scripts/2_add_to_cluster.sh
 
 3_ingress:
 	bash ./scripts/3_gitlab_ingress.sh
