@@ -47,6 +47,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: wil-playground
+            name: wil-playground-bonus
             port:
               number: 8888 # <--- cela N° 2
