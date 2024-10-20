@@ -29,7 +29,6 @@ response=$(sudo curl -s --request POST "$gitlab_api/projects" \
         "name": "'$1'",
         "description": "'$1'",
         "path": "'$1'",
-        "namespace_id": "'$user_id'",
         "initialize_with_readme": true,
         "visibility": "public"
     }'
