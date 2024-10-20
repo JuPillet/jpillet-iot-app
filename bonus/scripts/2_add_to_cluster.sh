@@ -1,4 +1,6 @@
 #!/bin/bash
+sudo kubectl delete namespace dev
+sudo kubectl create namespace dev
 sudo kubectl create namespace gitlab
 
 sudo helm repo add gitlab https://charts.gitlab.io/
