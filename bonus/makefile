@@ -80,7 +80,7 @@ addbonus:
 	read -p "" target; \
 	echo "entrez le nom du depos de destination"; \
 	read -p "" reponame; \
-	echo "entrez le chemin le dossier de copier:"; \
+	echo "entrez le chemin ou copier la cible:"; \
 	read -p "$$reponame/" destination; \
 	bash ./scripts/14_add_bonus.sh "$$target" "$$reponame" "$$destination"
 
