@@ -1,6 +1,6 @@
 SHELL:= /bin/bash
 
-all: install
+all: 1_install
 
 0_test:
 	@echo "Enter a value for the variable1:"; \
